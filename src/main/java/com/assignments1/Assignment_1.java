@@ -1,8 +1,8 @@
 package com.assignments1;
 
-import static com.assignments1.PersonUtils.getPersonList;
-
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -64,6 +64,12 @@ public class Assignment_1 {
 				.collect(Collectors.toList());
 	}
 
+	interface ICheckPerson {
+		int getMinAge();
+
+		int getMaxAge();
+	}
+
 	public static List<Person> processPersons(List<Person> persons) {
 		// Anonymous
 		ICheckPerson tester = new ICheckPerson() {
@@ -84,6 +90,18 @@ public class Assignment_1 {
 
 	public static List<Person> printPersonsWithPredicate(List<Person> persons, Predicate<Person> tester) {
 		return persons.stream().filter(p -> tester.test(p)).collect(Collectors.toList());
+	}
+
+	public static List<Person> getPersonList() {
+		List<Person> persons = new ArrayList<>();
+		Random random = new Random();
+		for (int i = 1; i <= 1000; i++) {
+			int age = random.ints(1, 99).findAny().getAsInt();
+			persons.add(new Person(i, ("Person" + i), age, (i % 2 == 0) ? "Male" : "Female"));
+		}
+		LOGGER.info("List of Persons size : {}", persons.size());
+		// persons.stream().forEach(System.out::println);
+		return persons;
 	}
 
 }
